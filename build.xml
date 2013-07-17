@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lysander" default="package-only" basedir=".">
+
+	<!-- set global properties for this build -->
+	<property name="src" location="src" />
+	<property name="src.monitor" location="${src}/monitor" />
+	<property name="src.collector" location="${src}/collector" />
+	<property name="build" location="build" />
+	<property name="build.monitor" location="${build}/monitor" />
+	<property name="build.collector" location="${build}/collector" />
+	<property name="dist" location="dist" />
+
+
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}" />
+		<mkdir dir="${build.monitor}" />
+		<mkdir dir="${build.collector}" />
+		<mkdir dir="${dist}" />
+	</target>
+
+
+	<target name="compile-monitor" depends="init" description="compile the monitor ">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src.monitor}" destdir="${build.monitor}" />
+	</target>
+	<target name="compile-collector" depends="init" description="compile the collector ">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src.collector}" destdir="${build.collector}" />
+	</target>
+
+	<target name="package-only" depends="clean,init, compile-monitor" description="compile the monitor ">
+		<!-- monitor -->
+		<jar jarfile="${dist}/lysander_monitor.jar">
+			<!-- Only include class files from build tree - see above -->
+			<fileset dir="${build.monitor}" includes="**/*.class" />
+		</jar>
+	</target>
+
+</project>
