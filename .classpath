@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/accountant"/>
 	<classpathentry kind="src" path="test/src"/>
 	<classpathentry kind="src" path="src/collector"/>
 	<classpathentry kind="src" path="src/monitor"/>

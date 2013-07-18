@@ -5,9 +5,11 @@
 	<property name="src" location="src" />
 	<property name="src.monitor" location="${src}/monitor" />
 	<property name="src.collector" location="${src}/collector" />
+	<property name="lib" location="lib" />
 	<property name="build" location="build" />
 	<property name="build.monitor" location="${build}/monitor" />
 	<property name="build.collector" location="${build}/collector" />
+	<property name="build.lib" location="${build}/lib" />
 	<property name="dist" location="dist" />
 
 
@@ -17,31 +19,50 @@
 		<delete dir="${dist}" />
 	</target>
 
+
+
 	<target name="init">
 		<!-- Create the time stamp -->
 		<tstamp />
 		<!-- Create the build directory structure used by compile -->
 		<mkdir dir="${build}" />
 		<mkdir dir="${build.monitor}" />
+		<mkdir dir="${build.lib}" />
 		<mkdir dir="${build.collector}" />
 		<mkdir dir="${dist}" />
 	</target>
 
 
+	<target name="copy-libraries" depends="init">
+		<copy todir="${build.lib}">
+			<fileset dir="${lib}" includes="**/*.jar" />
+		</copy>
+	</target>
+
 	<target name="compile-monitor" depends="init" description="compile the monitor ">
 		<!-- Compile the java code from ${src} into ${build} -->
 		<javac srcdir="${src.monitor}" destdir="${build.monitor}" />
 	</target>
-	<target name="compile-collector" depends="init" description="compile the collector ">
+
+	<target name="compile-collector" depends="init, copy-libraries, compile-monitor" description="compile the collector ">
 		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src.collector}" destdir="${build.collector}" />
+		<javac srcdir="${src.collector}" destdir="${build.collector}">
+			<classpath>
+				<pathelement location="${build.monitor}" />
+				<fileset dir="${build.lib}" includes="**/*.jar" />
+			</classpath>
+		</javac>
 	</target>
 
-	<target name="package-only" depends="clean,init, compile-monitor" description="compile the monitor ">
+	<target name="package-only" depends="clean,init, compile-monitor, compile-collector" description="compile the monitor ">
 		<!-- monitor -->
 		<jar jarfile="${dist}/lysander_monitor.jar">
 			<!-- Only include class files from build tree - see above -->
 			<fileset dir="${build.monitor}" includes="**/*.class" />
+		</jar>
+		<jar jarfile="${dist}/lysander_collector.jar">
+			<!-- Only include class files from build tree - see above -->
+			<fileset dir="${build.collector}" includes="**/*.class" />
 		</jar>
 	</target>
 

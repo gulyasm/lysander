@@ -1,4 +1,4 @@
-package lysander;
+package hu.dmlab.lysander.collector;
 
 import static org.junit.Assert.*;
 
