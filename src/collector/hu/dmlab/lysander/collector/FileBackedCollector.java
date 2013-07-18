@@ -1,7 +1,6 @@
 package hu.dmlab.lysander.collector;
 
-import hu.dmlab.lysander.collector.statistics.AverageResponseTime;
-import hu.dmlab.lysander.collector.statistics.MinMax;
+import hu.dmlab.lysander.collector.save.SaveService;
 import hu.dmlab.lysander.monitor.Event;
 
 import java.io.BufferedReader;
@@ -12,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileBackedCollector {
+
+	private static String path = "E:/TEMP/dave";
 
 	public static void main(String[] args) throws IOException {
 		if (args.length < 1) {
@@ -36,16 +37,8 @@ public class FileBackedCollector {
 
 		RequestMerger merger = new RequestMerger(2);
 		List<Request> requests = merger.merge(events);
-		System.out.println(requests.size());
-		AverageResponseTime stat1 = new AverageResponseTime();
-		stat1.setData(requests);
-		stat1.doMath();
-		System.out.println(stat1.getResult());
-		MinMax stat2 = new MinMax();
-		stat2.setData(requests);
-		stat2.doMath();
-		System.out.println(stat2.getResult());
-		
+		SaveService service = new FileSaveService();
+		service.save(requests, path);
 	}
 
 }

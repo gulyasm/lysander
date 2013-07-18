@@ -2,11 +2,13 @@ package hu.dmlab.lysander.collector;
 
 import hu.dmlab.lysander.monitor.Event;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import com.google.common.base.Preconditions;
 
-public class Request {
+public class Request implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private long id;
 	private long endTimestamp = 0;
 	private long startTimestamp = 0;
@@ -69,13 +71,12 @@ public class Request {
 	@Override
 	public String toString() {
 		return "Request [id=" + id + ", endTimestamp=" + endTimestamp
-				+ ", startTimestamp=" + startTimestamp + ", events=" + eventMap.size() + "]";
+				+ ", startTimestamp=" + startTimestamp + ", events=" + eventMap.size()
+				+ "]";
 	}
 
 	public long duration() {
 		return endTimestamp - startTimestamp;
 	}
-	
-	
 
 }
