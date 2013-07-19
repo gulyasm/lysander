@@ -1,6 +1,5 @@
 package hu.dmlab.lysander.monitor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.OutputStream;
 
