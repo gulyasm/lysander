@@ -27,6 +27,7 @@ public class FileSaveService implements SaveService {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Request> restore(String path) {
 
