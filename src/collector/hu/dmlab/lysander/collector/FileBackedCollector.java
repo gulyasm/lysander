@@ -27,6 +27,9 @@ public class FileBackedCollector {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String line = null;
 			while ((line = reader.readLine()) != null) {
+				if (line.trim().length() < 6) {
+					continue;
+				}
 				Event event = Event.deserialize(line);
 				if (event != null) {
 					events.add(event);
@@ -35,8 +38,8 @@ public class FileBackedCollector {
 			reader.close();
 		}
 
-		RequestMerger merger = new RequestMerger(2);
-		List<Request> requests = merger.merge(events);
+		RequestMerger merger = new RequestMerger(3);
+		ArrayList<Request> requests = merger.merge(events);
 		SaveService service = new FileSaveService();
 		service.save(requests, path);
 	}

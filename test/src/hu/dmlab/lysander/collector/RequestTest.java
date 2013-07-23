@@ -13,15 +13,15 @@ public class RequestTest {
 	Request request;
 	Event goodEvent1, evilEvent, goodEvent3, goodEvent2;
 	long event1Ts, event2Ts, event3Ts;
-	long id = 32432;
-	long badId = 5643;
+	String id = "32432";
+	String badId = "5643";
 
 	@Before
 	public void setUp() throws Exception {
 		event1Ts = 100;
 		event2Ts = 200;
 		event3Ts = 300;
-		request = new Request(id,3);
+		request = new Request(id, 3);
 		goodEvent1 = new Event(id, event1Ts, "1");
 		goodEvent2 = new Event(id, event2Ts, "2");
 		goodEvent3 = new Event(id, event3Ts, "3");
@@ -73,9 +73,9 @@ public class RequestTest {
 		assertEquals(-100, request.delta(goodEvent3.type, goodEvent2.type));
 		assertEquals(0, request.delta(goodEvent3.type, goodEvent3.type));
 	}
-	
+
 	@Test
-	public void testDuration(){
+	public void testDuration() {
 		request.addEvent(goodEvent3);
 		assertEquals(200, request.duration());
 	}

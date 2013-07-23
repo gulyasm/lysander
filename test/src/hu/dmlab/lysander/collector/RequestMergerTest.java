@@ -1,13 +1,10 @@
 package hu.dmlab.lysander.collector;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import hu.dmlab.lysander.monitor.Event;
 
 import java.util.Arrays;
 import java.util.List;
-
-import hu.dmlab.lysander.collector.Request;
-import hu.dmlab.lysander.collector.RequestMerger;
-import hu.dmlab.lysander.monitor.Event;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,9 +18,9 @@ public class RequestMergerTest {
 	@Before
 	public void setUp() throws Exception {
 		merger = new RequestMerger(2);
-		event1 = new Event(23, 100, "1");
+		event1 = new Event("23", 100, "1");
 		event2 = new Event(event1.id, 200, "2");
-		event3 = new Event(34, 200, "2");
+		event3 = new Event("34", 200, "2");
 	}
 
 	@After

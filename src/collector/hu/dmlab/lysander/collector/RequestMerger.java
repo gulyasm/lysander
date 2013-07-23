@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RequestMerger {
 
-	private HashMap<Long, Request> requests;
+	private HashMap<String, Request> requests;
 	private int expected;
 
 	public RequestMerger(int expected) {
@@ -16,7 +16,7 @@ public class RequestMerger {
 		requests = new HashMap<>();
 	}
 
-	public List<Request> merge(List<Event> events) {
+	public ArrayList<Request> merge(List<Event> events) {
 		ArrayList<Request> completed = new ArrayList<>();
 		for (Event event : events) {
 			Request request = getRequest(event.id);
@@ -28,7 +28,7 @@ public class RequestMerger {
 		return completed;
 	}
 
-	private Request getRequest(long id) {
+	private Request getRequest(String id) {
 		Request request = null;
 		if (requests.containsKey(id)) {
 			request = requests.get(id);

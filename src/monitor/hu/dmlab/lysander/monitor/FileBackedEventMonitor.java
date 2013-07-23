@@ -31,13 +31,12 @@ public class FileBackedEventMonitor extends EventMonitorBase {
 	}
 
 	@Override
-	public long report(Event event) {
+	public String report(Event event) {
 		try {
 			event.serialize(fileStream);
 		} catch (IOException e) {
-			return -1;
+			return null;
 		}
 		return event.id;
 	}
-
 }

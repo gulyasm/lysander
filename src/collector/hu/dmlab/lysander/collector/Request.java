@@ -9,24 +9,24 @@ import com.google.common.base.Preconditions;
 
 public class Request implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private long id;
+	private String id;
 	private long endTimestamp = 0;
 	private long startTimestamp = 0;
 	private HashMap<String, Long> eventMap;
 	private int expectedEvents;
 
-	public Request(long id, int expectedEvents) {
+	public Request(String id, int expectedEvents) {
 		this.id = id;
 		this.expectedEvents = expectedEvents;
 		eventMap = new HashMap<>();
 	}
 
-	public Request(long id) {
+	public Request(String id) {
 		this(id, 2);
 	}
 
 	public void addEvent(Event event) {
-		Preconditions.checkArgument(this.id == event.id);
+		Preconditions.checkArgument(this.id.equals(event.id));
 		eventMap.put(event.type, event.timestamp);
 		final long timestamp = event.timestamp;
 		if (startTimestamp > timestamp || startTimestamp == 0) {
@@ -57,7 +57,7 @@ public class Request implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return (int) (this.id ^ (id >>> 32));
+		return id.hashCode();
 	}
 
 	public long getEnd() {
