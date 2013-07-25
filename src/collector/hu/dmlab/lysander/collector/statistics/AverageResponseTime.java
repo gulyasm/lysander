@@ -1,41 +1,33 @@
 package hu.dmlab.lysander.collector.statistics;
 
 import hu.dmlab.lysander.collector.Request;
-import hu.dmlab.lysander.collector.Statistician;
-
-import java.util.List;
+import hu.dmlab.lysander.collector.StatisticianBase;
 
 import com.google.common.base.Preconditions;
 
-public class AverageResponseTime implements Statistician<Request, Double> {
+public class AverageResponseTime extends StatisticianBase<Request, Double> {
 
 	private long sum = 0;
 	private int size = 0;
-	private List<Request> data;
-
-	@Override
-	public void setData(List<Request> data) {
-		this.data = data;
-
-	}
 
 	@Override
 	public boolean doMath() {
 		Preconditions.checkState(sum == 0);
 		Preconditions.checkState(size == 0);
-		Preconditions.checkState(data != null);
-		for (Request request : data) {
-			long duration = request.duration();
-			sum += duration;
-			size++;
-		}
-		data = null;
+		super.doMath();
 		return true;
 	}
 
 	@Override
 	public Double getResult() {
 		return sum / (double) size;
+	}
+
+	@Override
+	protected void processItem(Request request) {
+		long duration = request.duration();
+		sum += duration;
+		size++;
 	}
 
 }

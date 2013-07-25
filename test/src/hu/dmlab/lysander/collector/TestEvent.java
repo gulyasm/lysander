@@ -1,5 +1,9 @@
 package hu.dmlab.lysander.collector;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import hu.dmlab.lysander.monitor.Event;
 
 public class TestEvent extends Event {
@@ -11,5 +15,5 @@ public class TestEvent extends Event {
 	public TestEvent() {
 		super(id, timestamp, type);
 	}
-
+	
 }
