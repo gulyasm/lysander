@@ -12,14 +12,13 @@ import java.util.List;
 
 public class FileBackedCollector {
 
-	private static String path = "E:/TEMP/dave";
-
 	public static void main(String[] args) throws IOException {
-		if (args.length < 1) {
+		if (args.length < 2) {
 			return;
 		}
+		final String path = args[0];
 		List<Event> events = new ArrayList<>();
-		for (int i = 0; i < args.length; i++) {
+		for (int i = 1; i < args.length; i++) {
 			File file = new File(args[i]);
 			if (!file.exists() || !file.isFile()) {
 				return;
