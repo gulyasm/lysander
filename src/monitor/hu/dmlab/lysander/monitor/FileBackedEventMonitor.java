@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * Event monitor, recording events to the given file.
+ * @author Mate Gulyas
+ *
+ */
 public class FileBackedEventMonitor extends EventMonitorBase {
 
 	private FileOutputStream fileStream;

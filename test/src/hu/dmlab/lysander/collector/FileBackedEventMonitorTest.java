@@ -12,7 +12,6 @@ import java.util.Random;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -25,11 +24,18 @@ public class FileBackedEventMonitorTest {
 	private File file;
 	private Random random;
 	private long id;
+	private final String prefix = "prefix";
 
 	@Test
 	public void testSetCurrentMaxId() {
+		setRandomId();
 		assertEquals(id, monitor.peakId());
 		assertEquals(id + 1, monitor.popId());
+	}
+
+	private void setRandomId() {
+		id = random.nextLong();
+		monitor.setCurrentMaxId(id);
 	}
 
 	@After
@@ -44,27 +50,27 @@ public class FileBackedEventMonitorTest {
 
 	@Before
 	public void setup() throws IOException {
+		random = new Random(System.currentTimeMillis());
 		file = folder.newFile();
 		monitor = new FileBackedEventMonitor(file);
-		random = new Random(System.currentTimeMillis());
 		monitor.setCurrentMaxId(id);
+		monitor.setPrefix(prefix);
 	}
 
 	@Test
-	public void testId() {
-		id = random.nextLong();
+	public void testConstructor() {
+		assertEquals(prefix, monitor.getPrefix());
 	}
-	
+
 	@Test
-	@Ignore
 	public void testReport() throws IOException {
-		Event event = new TestEvent();
+		final Event event = new TestEvent();
+		setRandomId();
 		monitor.report(event);
 		monitor.close();
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		String expected = TestEvent.id + "," + TestEvent.timestamp + "," + TestEvent.type
-				+ "\n\r";
-		assertEquals(expected, br.readLine());
+		final BufferedReader br = new BufferedReader(new FileReader(file));
+		final String to = TestEvent.id + "," + Long.toString(TestEvent.timestamp) + "," + TestEvent.type;
+		assertEquals(to, br.readLine());
 		br.close();
 	}
 
