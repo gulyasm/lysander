@@ -6,8 +6,9 @@ import java.io.IOException;
 
 /**
  * Event monitor, recording events to the given file.
+ * 
  * @author Mate Gulyas
- *
+ * 
  */
 public class FileBackedEventMonitor extends EventMonitorBase {
 

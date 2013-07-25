@@ -21,8 +21,7 @@ public class FileSaveService implements SaveService {
 		if (!file.exists()) {
 			file.createNewFile();
 		}
-		try (ObjectOutputStream stream = new ObjectOutputStream(
-				new FileOutputStream(file))) {
+		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(file))) {
 			stream.writeObject(data);
 		}
 	}
@@ -34,8 +33,7 @@ public class FileSaveService implements SaveService {
 		try {
 			ArrayList<Request> list = null;
 			File file = new File(path);
-			try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(
-					file))) {
+			try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file))) {
 				list = ((ArrayList<Request>) stream.readObject());
 			}
 			return list;

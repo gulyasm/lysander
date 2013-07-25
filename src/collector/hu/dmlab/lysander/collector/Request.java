@@ -70,9 +70,8 @@ public class Request implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Request [id=" + id + ", endTimestamp=" + endTimestamp
-				+ ", startTimestamp=" + startTimestamp + ", events=" + eventMap.size()
-				+ "]";
+		return "Request [id=" + id + ", endTimestamp=" + endTimestamp + ", startTimestamp=" + startTimestamp
+				+ ", events=" + eventMap.size() + "]";
 	}
 
 	public long duration() {

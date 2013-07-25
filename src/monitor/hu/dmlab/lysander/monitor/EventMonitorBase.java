@@ -5,7 +5,9 @@ public abstract class EventMonitorBase implements EventMonitor {
 	private String prefix;
 
 	/**
-	 * The monitor can be set to this value, and id generation will go from this value. This value is available via {@link #peakId()}
+	 * The monitor can be set to this value, and id generation will go from this
+	 * value. This value is available via {@link #peakId()}
+	 * 
 	 * @param currentMaxId
 	 */
 	public void setCurrentMaxId(long currentMaxId) {

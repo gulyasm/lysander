@@ -3,8 +3,6 @@ package hu.dmlab.lysander.collector.statistics;
 import hu.dmlab.lysander.collector.Request;
 import hu.dmlab.lysander.collector.StatisticianBase;
 
-import java.util.List;
-
 public class MinMax extends StatisticianBase<Request, long[]> {
 	private long min = 0;
 	private long max = 0;
@@ -17,10 +15,6 @@ public class MinMax extends StatisticianBase<Request, long[]> {
 		return true;
 	}
 
-	/**
-	 * @return result[0] is the min, result[1] is the max. Length of the array
-	 *         is 2.
-	 */
 	@Override
 	public long[] getResult() {
 		return new long[] { min, max };

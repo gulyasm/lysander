@@ -13,7 +13,7 @@ import org.junit.Test;
 public class RequestMergerTest {
 
 	private RequestMerger merger;
-	Event event1, event2,event3;
+	Event event1, event2, event3;
 
 	@Before
 	public void setUp() throws Exception {
@@ -34,11 +34,13 @@ public class RequestMergerTest {
 		List<Request> list = merger.merge(Arrays.asList(event1, event2));
 		assertEquals(1, list.size());
 	}
+
 	@Test
 	public void noEvent() {
 		List<Request> list = merger.merge(Arrays.asList(event1, event3));
 		assertEquals(0, list.size());
 	}
+
 	@Test
 	public void noEvent2() {
 		merger = new RequestMerger(3);

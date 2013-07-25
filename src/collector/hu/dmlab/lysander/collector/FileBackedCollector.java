@@ -16,8 +16,7 @@ public class FileBackedCollector {
 		if (args.length < 2) {
 			return;
 		}
-		String path = args[0];
-
+		final String path = args[0];
 		List<Event> events = new ArrayList<>();
 		for (int i = 1; i < args.length; i++) {
 			File file = new File(args[i]);
