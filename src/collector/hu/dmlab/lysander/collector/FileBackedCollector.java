@@ -5,6 +5,7 @@ import hu.dmlab.lysander.monitor.Event;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,12 +17,25 @@ public class FileBackedCollector {
 		if (args.length < 2) {
 			return;
 		}
+		
 		final String path = args[0];
-		List<Event> events = new ArrayList<>();
+		ArrayList<File> logs = new ArrayList<>();
 		for (int i = 1; i < args.length; i++) {
 			File file = new File(args[i]);
+			logs.add(file);
+		}
+		FileBackedCollector collector = new FileBackedCollector();
+		ArrayList<Request> requests = collector.createRequests(logs, 2);
+		SaveService service = new FileSaveService();
+		service.save(requests, path);
+	}
+
+	public ArrayList<Request> createRequests(final List<File> logs, int eventsToComplete) throws FileNotFoundException,
+			IOException {
+		List<Event> events = new ArrayList<>();
+		for (File file : logs) {
 			if (!file.exists() || !file.isFile()) {
-				return;
+				continue;
 			}
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String line = null;
@@ -36,11 +50,8 @@ public class FileBackedCollector {
 			}
 			reader.close();
 		}
-
-		RequestMerger merger = new RequestMerger(3);
+		RequestMerger merger = new RequestMerger(eventsToComplete);
 		ArrayList<Request> requests = merger.merge(events);
-		SaveService service = new FileSaveService();
-		service.save(requests, path);
+		return requests;
 	}
-
 }
