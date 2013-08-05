@@ -15,6 +15,12 @@ public class Througput extends StatisticianBase<Request, int[]> {
 	private int[] throughputs = new int[512];
 	private long nextSeconds = 0;
 	private int currentIndex = 0;
+	private long startTime;
+
+	public Througput(long first) {
+		this.startTime = first;
+
+	}
 
 	@Override
 	public boolean doMath() {
@@ -41,20 +47,22 @@ public class Througput extends StatisticianBase<Request, int[]> {
 
 	@Override
 	protected void processItem(Request request) {
-		ensureArrayLength();
+		ensureArrayLength(currentIndex);
 		long current = request.getEnd();
 		if (nextSeconds == 0) {
-			nextSeconds = current + 1000;
+			nextSeconds = startTime-1000;
 		}
 		if (current > nextSeconds) {
-			currentIndex++;
-			nextSeconds += 1000;
+			int delta = (int) ((current - nextSeconds) / 1000);
+			currentIndex += delta;
+			nextSeconds += 1000 * delta;
+			ensureArrayLength(currentIndex);
 		}
 		throughputs[currentIndex]++;
 	}
 
-	private void ensureArrayLength() {
-		if (currentIndex == throughputs.length - 1) {
+	private void ensureArrayLength(int newIndex) {
+		if (newIndex == throughputs.length - 1) {
 			throughputs = Arrays.copyOf(throughputs, throughputs.length << 1);
 
 		}
