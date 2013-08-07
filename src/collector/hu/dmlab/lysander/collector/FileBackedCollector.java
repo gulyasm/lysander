@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FileBackedCollector {
@@ -17,7 +18,7 @@ public class FileBackedCollector {
 		if (args.length < 2) {
 			return;
 		}
-		
+
 		final String path = args[0];
 		ArrayList<File> logs = new ArrayList<>();
 		for (int i = 1; i < args.length; i++) {
@@ -25,7 +26,7 @@ public class FileBackedCollector {
 			logs.add(file);
 		}
 		FileBackedCollector collector = new FileBackedCollector();
-		ArrayList<Request> requests = collector.createRequests(logs, 2);
+		ArrayList<Request> requests = collector.createRequests(logs, 3);
 		SaveService service = new FileSaveService();
 		service.save(requests, path);
 	}
@@ -51,6 +52,7 @@ public class FileBackedCollector {
 			reader.close();
 		}
 		RequestMerger merger = new RequestMerger(eventsToComplete);
+		Collections.sort(events);
 		ArrayList<Request> requests = merger.merge(events);
 		return requests;
 	}

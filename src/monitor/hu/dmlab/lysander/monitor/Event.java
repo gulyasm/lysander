@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-public class Event {
+import com.google.common.primitives.Longs;
+
+public class Event implements Comparable<Event> {
 
 	// Not final due to exception handling
 	private static byte[] newline;
@@ -51,6 +53,11 @@ public class Event {
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", type=" + type + ", timestamp=" + timestamp + "]";
+	}
+
+	@Override
+	public int compareTo(Event arg0) {
+		return Longs.compare(timestamp, arg0.timestamp);
 	}
 
 }

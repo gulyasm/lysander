@@ -19,7 +19,6 @@ public class Througput extends StatisticianBase<Request, int[]> {
 
 	public Througput(long first) {
 		this.startTime = first;
-
 	}
 
 	@Override
