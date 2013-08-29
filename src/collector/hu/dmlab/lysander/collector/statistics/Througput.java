@@ -12,7 +12,7 @@ import com.google.common.primitives.Longs;
 
 public class Througput extends StatisticianBase<Request, int[]> {
 
-	private int[] throughputs = new int[512];
+	private int[] throughputs = new int[2048];
 	private long nextSeconds = 0;
 	private int currentIndex = 0;
 	private long startTime;
@@ -61,7 +61,7 @@ public class Througput extends StatisticianBase<Request, int[]> {
 	}
 
 	private void ensureArrayLength(int newIndex) {
-		if (newIndex == throughputs.length - 1) {
+		if (newIndex >= throughputs.length - 1) {
 			throughputs = Arrays.copyOf(throughputs, throughputs.length << 1);
 
 		}

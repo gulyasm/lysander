@@ -39,9 +39,14 @@
 		</copy>
 	</target>
 
-	<target name="compile-monitor" depends="init" description="compile the monitor ">
+	<target name="compile-monitor" depends="init, copy-libraries" description="compile the monitor ">
 		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src.monitor}" destdir="${build.monitor}" />
+		<javac srcdir="${src.monitor}" destdir="${build.monitor}">
+			<classpath>
+				<pathelement location="${build.monitor}" />
+				<fileset dir="${build.lib}" includes="**/*.jar" />
+			</classpath>
+		</javac>
 	</target>
 
 	<target name="compile-collector" depends="init, copy-libraries, compile-monitor" description="compile the collector ">
