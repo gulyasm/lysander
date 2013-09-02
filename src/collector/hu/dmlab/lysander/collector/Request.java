@@ -28,6 +28,7 @@ public class Request implements Serializable {
 	public Integer getPayload1(String key) {
 		return payload1s.get(key);
 	}
+
 	public Integer getPayload2(String key) {
 		return payload2s.get(key);
 	}

@@ -49,7 +49,7 @@ public class Througput extends StatisticianBase<Request, int[]> {
 		ensureArrayLength(currentIndex);
 		long current = request.getEnd();
 		if (nextSeconds == 0) {
-			nextSeconds = startTime-1000;
+			nextSeconds = startTime - 1000;
 		}
 		if (current > nextSeconds) {
 			int delta = (int) ((current - nextSeconds) / 1000);
