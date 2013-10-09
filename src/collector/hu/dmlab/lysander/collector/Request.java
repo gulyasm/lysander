@@ -13,12 +13,24 @@ public class Request implements Serializable {
 	private long endTimestamp = 0;
 	private long startTimestamp = 0;
 	private HashMap<String, Long> eventMap;
+	private HashMap<String, Integer> payload1s;
+	private HashMap<String, Integer> payload2s;
 	private int expectedEvents;
 
 	public Request(String id, int expectedEvents) {
 		this.id = id;
 		this.expectedEvents = expectedEvents;
 		eventMap = new HashMap<>();
+		payload1s = new HashMap<>();
+		payload2s = new HashMap<>();
+	}
+
+	public Integer getPayload1(String key) {
+		return payload1s.get(key);
+	}
+
+	public Integer getPayload2(String key) {
+		return payload2s.get(key);
 	}
 
 	public Request(String id) {
@@ -34,6 +46,12 @@ public class Request implements Serializable {
 		}
 		if (endTimestamp < timestamp || endTimestamp == 0) {
 			endTimestamp = timestamp;
+		}
+		if (event.payload1 >= 0) {
+			payload1s.put(event.type, event.payload1);
+		}
+		if (event.payload2 >= 0) {
+			payload2s.put(event.type, event.payload2);
 		}
 	}
 
